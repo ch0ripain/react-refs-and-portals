@@ -8,48 +8,50 @@ const timer = useRef()
 timer.current = setInterval(() => {}, 100)
 clearInterval(timer.current)
 ```
-Ref can also be use to perform built-in methods of html elements when we need.
-For example to open an input file but instead of triggering that method in the normal way we can triggered using a ref on that input like this
+A ref can also be used to call built-in methods of HTML elements when needed. For example, to open a file input, instead of triggering the method in the usual way, we can trigger it using a <code>ref</code> on the input element, like this:
 ```javascript
-const filePickerRef = React.useRef()
-<input ref={filePickerRef}  type="file"  /> //ref is an atribute already integrated on all html elements whilst using react
-<button onClick={() => filePickerRef.current.click()}>Pick Image</button> //For triggering that click() method which is property of input type file we need to access to the ref and call it as we do in this line and that will triggered the method
+const filePickerRef = React.useRef();
+<input ref={filePickerRef} type="file" />  {/* The ref attribute is built-in for all HTML elements in React */}
+<button onClick={() => filePickerRef.current.click()}>Pick Image</button>  {/* Triggering the click() method of the file input using the ref */}
 ```
+In this example, the <code>ref</code> attribute is used to reference the input element. By calling <code>filePickerRef.current.click()</code>, we can programmatically trigger the file picker dialog instead of relying on the usual user interaction.
 > [!NOTE]
-> Ref is property of one component instance and the rerender will never change his value
+> A <code>ref</code> is a property of a component instance, and its value will not change on re-renders.
 
 ## 🌀 Portals 🌀
-Portal in react is a way to make code be injected into the place we want in our HTML DOM. And we do this because if we dont for example in this project the ResultModal will appear inside some other elements bcz the place we are using that jsx is where then that jsx is injected in the final HTML.
-To take control of that we can use { createPortal } which is a function from react-dom that works like this:
+A portal in React allows you to render content in a different part of the DOM than where the component is defined. This is useful because, without it, for example, in this project, the <code>ResultModal</code> might appear inside other elements due to the position of the JSX in the component tree.
+
+To control where this content is rendered, we can use <code>{ createPortal }</code>, a function from <code>react-dom</code>, which works like this:
 ```javascript
-import { createPortal } from 'react-dom'
-//this createPortal function receive 2 arguments (renderable code, place we want to inject) so we need to this changes to use it
+import { createPortal } from 'react-dom' //2 arguments => (renderable code, target DOM element where you want to inject)
 export default function ResultModal(...){
-return createPortal(<p>code renderable </p> , document.querySelector('placeWeWant')
-)}
+return createPortal(
+    <p>Renderable content</p>, 
+    document.querySelector('placeWeWant') // Target element where the content will be injected
+  );}
 ```
-And with that we are in the end showing all that content in the DOM position we want.
 
 ## ⚙️ useImperativeHandle ⚙️ 
-This react hook allow us to expose some built-in html element method, that u see before, working in pair with refs and also can making a more readable and mantainable code:
+The <code>useImperativeHandle</code> hook allows us to expose certain built-in HTML element methods (like those we’ve seen before) when working with refs. This hook helps make the code more readable and maintainable by controlling what functions or properties are accessible outside of the component.
 
 ```javascript
 //We need to forward a ref from another component
 import { forwardRef } from 'react'
+
 //Change how our component is exported
-const ResultModal = forwardRef(function ResultModal(props, ref){}) //forwardRef receive as 2nd argument the ref coming from the other component, righ next to props
+const ResultModal = forwardRef(function ResultModal(props, ref){}) //forwardRef receive as 2nd argument the ref coming from the other component, right next to props
 const dialog = useRef()
-useImperativeHandle(forwardedRef, () => {             //first argument is a ref where we need to use this methods (this ref is forwarded from another component. 
-return { someRelatedName(){ dialog.current.click() }, //second argument need to return an object of functions, functions what in the end we just name the expose method and execute the original method inside of that function (we also can add some other logic)
+useImperativeHandle(forwardedRef, () => {                          //first argument is the ref where then we can call this exposed methods
+return { someRelatedName(){ dialog.current.click() },             //The second argument of useImperativeHandle should return an object of functions. In this object, each function acts as an "exposed method." These methods are named by you, and within each one, you can execute the original method (e.g., dialog.current.click()) or add additional logic as needed.
 }
 <dialog ref={dialog} ...>...</dialog>
 })
-// So in the component we are forwarding that ref we need another ref to connect at that component and also for use this expose methods
-//in TimerChallenge
+// In the component where we are forwarding the ref (which gives access to the exposed methods), we need a separate ref inside the parent component to actually call those methods.
+//TimerChallenge.jsx
 const dialog = useRef()
-//passing that ref to the component
+//pass the ref to the component
 <ResultModal ref={dialog} />
-//Using the expose method in the component we are passing ref
+//Use the expose method
 someFunction(){
 dialog.current.someRelatedName()
 }
