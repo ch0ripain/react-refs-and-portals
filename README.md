@@ -1,6 +1,6 @@
 # React Refs and Portals
 ## 🔗 Refs 🔗
-First, you need to import <code>useRef from 'react'</code>. A ref is like a persistent storage value that isn't affected by React's rendering cycle. This allows you to store values that persist over time, enabling various functionalities.
+First, you need to import <code>useRef from 'react'</code>. A <code>ref</code> is like a persistent storage value that isn't affected by React's rendering cycle. This allows you to store values that persist over time, enabling various functionalities.
 
 For example, if you assign a <code>ref</code> value to a <code>setInterval</code> (as shown in this project), you can later clean up that interval using <code>clearInterval</code> like this:
 ```javascript
