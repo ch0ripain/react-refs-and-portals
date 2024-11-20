@@ -1,9 +1,8 @@
 # React Refs and Portals
 ## 🔗 Refs 🔗
-First u need to import as { useRef } from 'react'
-A ref is like a storage value that will not be affected for react rendering cycle. 
-This means you can storage value that will perdue in the time and thats allow u to do different things.
-If we asign the ref value to a setInterval what is the example viewed on this project, then u can clean that interval using clearInterval like this:
+First, you need to import <code>useRef from 'react'</code>. A ref is like a persistent storage value that isn't affected by React's rendering cycle. This allows you to store values that persist over time, enabling various functionalities.
+
+For example, if you assign a <code>ref</code> value to a <code>setInterval</code> (as shown in this project), you can later clean up that interval using <code>clearInterval</code> like this:
 ```javascript
 const timer = useRef()
 timer.current = setInterval(() => {}, 100)
