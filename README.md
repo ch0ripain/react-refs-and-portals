@@ -1,4 +1,4 @@
-# React Refs and Portals
+<h1 align="center">🔗 React Refs and Portals 🌀</h1>
 ## 🔗 Refs 🔗
 First, you need to import <code>useRef from 'react'</code>. A <code>ref</code> is like a persistent storage value that isn't affected by React's rendering cycle. This allows you to store values that persist over time, enabling various functionalities.
 
@@ -57,5 +57,4 @@ dialog.current.someRelatedName()
 }
 ```
 ---
-<p align="center">🌟 This project is a practice exercise I learned from the <a href='https://www.udemy.com/course/react-the-complete-guide-incl-redux/?couponCode=ST7MT110524'>Academind's React Course</a> 🌟</p>
-<p align="center">🐸 I hope this README helps you in some way! 🐸</p>
+<p align="center">🐸 This project is a practice exercise I learned from the <a href='https://www.udemy.com/course/react-the-complete-guide-incl-redux/?couponCode=ST7MT110524'>Academind's React Course</a> 🐸</p>
